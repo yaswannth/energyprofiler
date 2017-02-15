@@ -96,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Profiler", averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 1}).toString());
             Log.d("Profiler", averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 2}).toString());
             Log.d("Profiler", averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 3}).toString());
+
+
+            Profiler.getInstance().start();
+            //do something
+            bubblesSort();
+            double energy = Profiler.getInstance().stop();
+
         } catch (Exception e) {e.printStackTrace();}
     }
 
