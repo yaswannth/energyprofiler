@@ -144,29 +144,9 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e) {e.printStackTrace();}
     }
 
-//    private String cmdCat(String f){
-//
-//        String[] command = {"cat", f};
-//        StringBuilder cmdReturn = new StringBuilder();
-//
-//        try {
-//            ProcessBuilder processBuilder = new ProcessBuilder(command);
-//            Process process = processBuilder.start();
-//
-//            InputStream inputStream = process.getInputStream();
-//            int c;
-//
-//            while ((c = inputStream.read()) != -1) {
-//                cmdReturn.append((char) c);
-//            }
-//
-//            return cmdReturn.toString();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return "Something Wrong";
-//        }
-//
-//    }
+
+    private void bubblesSort() {
+        //write a bubble sort algorithm here
+    }
 
 }
