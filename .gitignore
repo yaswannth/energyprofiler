@@ -6,7 +6,7 @@ build.gradle
 /.idea/misc.xml
 /.idea/modules/xml
 /app/build.gradle
-/gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.properties
 /.idea/libraries
 .DS_Store
 /build
