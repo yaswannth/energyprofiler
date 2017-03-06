@@ -7,7 +7,11 @@ package assl.cs.usu.edu.energyprofiling;
 public class Profiler {
 
     private static Profiler instance;
-
+    private MainActivity mainActivity = new MainActivity();
+    private static boolean running = false;
+    public static long POLL_DURATION = 1000;
+    public double totalEnergy = 0;
+    private double cpuEnergy = 0;
     private Profiler() {
 
     }
@@ -15,21 +19,28 @@ public class Profiler {
     public static Profiler getInstance() {
         if(instance == null) {
             instance = new Profiler();
+            running = true;
         }
         return instance;
     }
 
     public void start() {
-        //cal readCPUUUsage() periodically
+        //cal
+        readCPUUsage();
     }
 
     public double stop() {
-        //calculate energy consumption
-        return 0;
+        running = false;
+        totalEnergy = totalEnergy + cpuEnergy;
+        return totalEnergy;
     }
 
-    private double readCPUUsage() {
+    private void readCPUUsage() {
         //read current CPU frequency
-        return 0;
+        try {
+            while (running)
+                Thread.sleep(POLL_DURATION);
+            cpuEnergy = mainActivity.getCpuEnergy(POLL_DURATION);
+        }catch (Exception e) {e.printStackTrace();}
     }
 }
