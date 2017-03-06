@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private List<String> memUsed, memAvailable, memFree, cached, threshold;
     private List<Float> cpuTotal, cpuAM;
     private List<Integer> memoryAM;
-    public List<Float> cpuSpeeds;
-    public List<Float> cpuFrequencies;
-    public List<Float> cpuPowers;
-    public float cpuEnergy;
-    public int numElements = 1000;
+    public static List<Float> cpuSpeeds = new ArrayList<Float>();
+    public static List<Float> cpuFrequencies = new ArrayList<Float>();
+    public static List<Float> cpuPowers = new ArrayList<Float>();
+    public static float cpuEnergy;
+    public int numElements = 10;
     private int[] data = new int[numElements];
 
     @Override
@@ -53,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        infoTextView = (TextView) findViewById(R.id.infoText) ;
-
+        infoTextView = (TextView) findViewById(R.id.infoText);
 
         try {
             Class<?> powerProfileClazz = Class.forName("com.android.internal.os.PowerProfile");
@@ -67,118 +66,36 @@ public class MainActivity extends AppCompatActivity {
 
             //Instantiate
             Object powerProInstance = constructor.newInstance(arguments);
-
             //define method
             Method averagePower = powerProfileClazz.getMethod("getAveragePower", new Class[]{String.class, int.class});
- //           Method averagePower_nolevel = powerProfileClazz.getMethod("getAveragePower", new Class[]{String.class});
-
             //The device I have BLU R1 HD has only one cpu speed and corresponding power in its power profile
             String cpuSpeed0 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 0}).toString();
-            /*String cpuSpeed1 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 1}).toString();
-            String cpuSpeed2 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 2}).toString();
-            String cpuSpeed3 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 3}).toString();
-            String cpuSpeed4 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 4}).toString();
-            String cpuSpeed5 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 5}).toString();
-            String cpuSpeed6 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 6}).toString();
-            String cpuSpeed7 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 7}).toString();
-            String cpuSpeed8 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 8}).toString();
-            String cpuSpeed9 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 9}).toString();
-            String cpuSpeed10 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 10}).toString();
-            String cpuSpeed11 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 11}).toString();
-            String cpuSpeed12 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 12}).toString();
-            String cpuSpeed13 = averagePower.invoke(powerProInstance, new Object[]{"cpu.speeds", 13}).toString();*/
-
-
-
             cpuSpeeds.add(Float.parseFloat(cpuSpeed0));
-            /*cpuSpeeds.add(Float.parseFloat(cpuSpeed1));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed2));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed3));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed4));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed5));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed6));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed7));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed8));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed9));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed10));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed11));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed12));
-            cpuSpeeds.add(Float.parseFloat(cpuSpeed13));*/
-
-
 
             String cpuPower0 = averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 0}).toString();
-            /*String cpuPower1 = averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 1}).toString();
-            String cpuPower2 = averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 2}).toString();
-            String cpuPower3 = averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 3}).toString();*/
-
             cpuPowers.add(Float.parseFloat(cpuPower0));
-            /*cpuPowers.add(Float.parseFloat(cpuPower1));
-            cpuPowers.add(Float.parseFloat(cpuPower2));
-            cpuPowers.add(Float.parseFloat(cpuPower3));*/
             String idlePower = averagePower.invoke(powerProInstance, new Object[]{"cpu.idle", 0}).toString();
             cpuPowers.add(Float.parseFloat(idlePower));
-
-/*
-            infoTextView.append("WiFi on: " + averagePower.invoke(powerProInstance, new Object[]{"wifi.on", 0}).toString() + "\n");
-            infoTextView.append("WiFi active: " + averagePower.invoke(powerProInstance, new Object[]{"wifi.active", 0}).toString() + "\n");
-            infoTextView.append("Gps on: " + averagePower.invoke(powerProInstance, new Object[]{"gps.on", 0}).toString() + "\n");
-            infoTextView.append("Screen: " + averagePower_nolevel.invoke(powerProInstance, new Object[]{"screen.full"}).toString() + "\n");
-*/
-
-/*
-            cpuTotal = new ArrayList<Float>();
-            cpuAM = new ArrayList<Float>();
-            memoryAM = new ArrayList<Integer>();
-            memUsed = new ArrayList<String>();
-            memAvailable = new ArrayList<String>();
-            memFree = new ArrayList<String>();
 
             pId = Process.myPid();
 
             am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-            amMI = am.getProcessMemoryInfo(new int[]{ pId });
-            mi = new ActivityManager.MemoryInfo();
-*/
 
-
-/*
-            Log.d("Profiler", batteryCap.invoke(powerProInstance, null).toString());
-            Log.d("Profiler", averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 1}).toString());
-            Log.d("Profiler", averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 2}).toString());
-            Log.d("Profiler", averagePower.invoke(powerProInstance, new Object[]{"cpu.active", 3}).toString());
-*/
-
-
-            Profiler.getInstance().start();
             //do something
             Random random = new Random();
             for (int i = 0; i < data.length; i++){
                 data[i] = random.nextInt(numElements);
             }
-
+            double energy = 0;
+            System.out.println(energy);
+            Profiler.getInstance().start();
             bubbleSort();
-            double energy = Profiler.getInstance().stop();
-            infoTextView.append("Total Energy consumed to sort: " + numElements + " is = " + energy + "\n");
+            energy = Profiler.getInstance().stop();
+            System.out.println("energy : " + energy);
+            infoTextView.append("Total Energy consumed to sort: " + Integer.toString(numElements) + " is = " + Double.toString(energy) + "\n");
         } catch (Exception e) {e.printStackTrace();}
     }
 
-    /*private long getCpuTime() {
-        long cputime = 0;
-        try {
-            //CPU time for a specific process
-            BufferedReader reader = new BufferedReader(new FileReader("/proc/" + pId + "/stat"));
-
-            String[] sa = reader.readLine().split("[ ]+", 18);
-
-            //utime + stime + cutime + cstime
-            cputime = Long.parseLong(sa[13]) + Long.parseLong(sa[14]) + Long.parseLong(sa[15]) + Long.parseLong(sa[16]);
-            reader.close();
-
-
-        }catch (Exception e) {e.printStackTrace();}
-        return cputime;
-    }*/
 
     public void getCpuFreq() {
         try {
@@ -193,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
             RandomAccessFile reader = new RandomAccessFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
             cpuFreq0 = reader.readLine();
             reader.close();
-
-            //cpuFreq = cmdCat("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq");
 
             infoTextView.append("CPU frequency (core 0): " + cpuFreq0 + "\n");
 
@@ -219,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e) {e.printStackTrace();}
     }
 
-    public float getCpuEnergy(float pollDuration){
+    public static float getCpuEnergy(float pollDuration){
         float energy0, energy1, energy2, energy3;
 
         //My device has only 4 cores
@@ -265,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 data[i] = data[min];
                 data[min] = tmp;
             }
+            System.out.println("running");
         }
     }
 }

@@ -1,5 +1,6 @@
 package assl.cs.usu.edu.energyprofiling;
 
+
 /**
  * Created by ywkwon on 2/15/2017.
  */
@@ -7,7 +8,6 @@ package assl.cs.usu.edu.energyprofiling;
 public class Profiler {
 
     private static Profiler instance;
-    private MainActivity mainActivity = new MainActivity();
     private static boolean running = false;
     public static long POLL_DURATION = 1000;
     public double totalEnergy = 0;
@@ -40,7 +40,7 @@ public class Profiler {
         try {
             while (running)
                 Thread.sleep(POLL_DURATION);
-            cpuEnergy = mainActivity.getCpuEnergy(POLL_DURATION);
+            cpuEnergy = MainActivity.getCpuEnergy(POLL_DURATION);
         }catch (Exception e) {e.printStackTrace();}
     }
 }
