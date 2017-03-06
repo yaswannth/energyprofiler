@@ -1,11 +1,12 @@
 *.iml
-*.gradle
+.gradle
+build.gradle
 /local.properties
 /.idea/workspace.xml
-.idea/misc.xml
-.idea/modules/xml
-app/build.gradle
-gradle/wrapper/gradle-wrapper.properties
+/.idea/misc.xml
+/.idea/modules/xml
+/app/build.gradle
+/gradle/wrapper/gradle-wrapper.properties
 /.idea/libraries
 .DS_Store
 /build
